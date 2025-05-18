@@ -1,23 +1,20 @@
-# nourrir_flask/Dockerfile
-
 FROM python:3.11-slim
 
-# Fix encoding issues and install dependencies
+# don't buffer stdout/stderr, and don't write .pyc files
 ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONPATH=/app
 
 WORKDIR /app
 
-# Copy dependencies first for caching
+# install dependencies
 COPY requirements.txt .
-
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the code
+# copy your app
 COPY . .
 
-# Port 8080 exposed
 EXPOSE 8080
 
-# Use Gunicorn for production (adjust workers as needed)
-CMD ["gunicorn", "-b", "0.0.0.0:8080", "app:app"]
+# tell gunicorn to stay in /app so it finds your modules
+CMD ["gunicorn", "--chdir", "/app", "-b", "0.0.0.0:8080", "app:app"]

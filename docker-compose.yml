@@ -1,6 +1,4 @@
-# nourrir_flask/docker-compose.yml
-
-#version: '3'
+version: '3.8'
 services:
   web:
     build: .
@@ -9,9 +7,12 @@ services:
       - "8282:8080"
     environment:
       - OLLAMA_URL=http://192.168.2.10:11434/api/chat
+      # make sure Python will look in /app for config.py
+      - PYTHONPATH=/app
     restart: unless-stopped
     networks:
       - ollama-net
+
 networks:
   ollama-net:
     driver: bridge
