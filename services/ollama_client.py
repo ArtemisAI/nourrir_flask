@@ -1,7 +1,7 @@
 import json
 import logging
 import requests
-from nourrir_flask.config import OLLAMA_URL, OLLAMA_MODEL, REQUEST_TIMEOUT
+from config import OLLAMA_URL, OLLAMA_MODEL, REQUEST_TIMEOUT
 
 
 class OllamaClient:

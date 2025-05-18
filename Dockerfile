@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 8080
 
 # tell gunicorn to stay in /app so it finds your modules
-CMD ["gunicorn", "--chdir", "/app", "-b", "0.0.0.0:8080", "app:app"]
+CMD ["gunicorn", "--chdir", "/app", "--config", "gunicorn_config.py", "app:app"]

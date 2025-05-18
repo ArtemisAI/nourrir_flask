@@ -22,6 +22,10 @@ def politique():   return render_template("politique.html")
 @app.route("/contact")
 def contact():     return render_template("contact.html")
 
+@app.route("/health")
+def health():
+    return jsonify({"status": "ok"}), 200
+
 @app.route("/nurih-ami", methods=["POST"])
 def nurih_ami():
     user_msg = (request.json or {}).get("message", "").strip()
