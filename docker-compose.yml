@@ -13,6 +13,26 @@ services:
     networks:
       - ollama-net
 
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=n8n
+      - N8N_BASIC_AUTH_PASSWORD=n8n
+      - N8N_HOST=0.0.0.0
+      - N8N_PORT=5678
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ./n8n:/home/node/.n8n
+    networks:
+      - ollama-net
+    command: >
+      sh -c "[ ! -f /home/node/.n8n/database.sqlite ] && n8n import:workflow --input=/home/node/.n8n/workflows/*.json --all; n8n start"
+
 networks:
   ollama-net:
     driver: bridge

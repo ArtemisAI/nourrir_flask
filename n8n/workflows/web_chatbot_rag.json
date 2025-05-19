@@ -1,0 +1,26 @@
+{
+  "name": "Website RAG Chatbot",
+  "active": true,
+  "settings": {"executionOrder":"v1"},
+  "nodes": [
+    {"id":"webhook","name":"Webhook","type":"n8n-nodes-base.webhook","typeVersion":1,"position":[100,200],"parameters":{"httpMethod":"POST","path":"chat","responseMode":"lastNode","responseData":{"type":"lastNodeOutput"}}},
+    {"id":"memory","name":"Window Buffer Memory","type":"@n8n/n8n-nodes-langchain.memoryBufferWindow","typeVersion":1,"position":[480,40],"parameters":{"sessionKey":"={{ $json.body.session }}","sessionIdType":"customKey","contextWindowLength":10}},
+    {"id":"pages","name":"Fetch Pages","type":"n8n-nodes-base.code","typeVersion":2,"position":[300,300],"parameters":{"jsCode":"const strip=html=>html.replace(/<[^>]+>/g,' ').replace(/\\s+/g,' ').trim();const base='http://web:8080';const urls=['/','/politique'];const out=[];for(const path of urls){const res=await $http.get(base+path);out.push({json:{content:strip(res.data),source:path}});}return out;"}},
+    {"id":"embeddings","name":"Embeddings Gemini","type":"@n8n/n8n-nodes-langchain.embeddingsGoogleGemini","typeVersion":1,"position":[480,140],"parameters":{"modelName":"models/text-embedding-004"}},
+    {"id":"vector","name":"Vector Store Memory","type":"@n8n/n8n-nodes-langchain.vectorStoreMemory","typeVersion":1,"position":[480,240],"parameters":{}},
+    {"id":"qa","name":"QA Website Knowledge","type":"@n8n/n8n-nodes-langchain.toolVectorStore","typeVersion":1,"position":[480,340],"parameters":{"description":"Use website knowledge to answer user questions"}},
+    {"id":"model","name":"OpenAI Chat Model","type":"@n8n/n8n-nodes-langchain.lmChatOpenAi","typeVersion":1,"position":[480,440],"parameters":{"model":"gpt-4o-2024-08-06","options":{"temperature":0.3}}},
+    {"id":"agent","name":"AI Agent","type":"@n8n/n8n-nodes-langchain.agent","typeVersion":1,"position":[720,200],"parameters":{"text":"={{ $json.body.message }}","promptType":"define","options":{"systemMessage":"Tu es NuRiH Ami, assistant bienveillant. Utilise le contenu interne du site NourrIR quand c’est pertinent pour répondre clairement. Si l’info n’existe pas, réponds honnêtement et suggère d’autres ressources."}}},
+    {"id":"respond","name":"Respond","type":"n8n-nodes-base.respondToWebhook","typeVersion":1,"position":[960,200],"parameters":{"respondWith":"json","responseBody":"={ \"reply\": $json.output }"}}
+  ],
+  "connections": {
+    "Window Buffer Memory":{"ai_memory":[[{"node":"AI Agent","type":"ai_memory","index":0}]]},
+    "Fetch Pages":{"main":[[{"node":"Embeddings Gemini","type":"main","index":0}]]},
+    "Embeddings Gemini":{"ai_embedding":[[{"node":"Vector Store Memory","type":"ai_embedding","index":0}]]},
+    "Vector Store Memory":{"ai_vectorStore":[[{"node":"QA Website Knowledge","type":"ai_vectorStore","index":0}]]},
+    "QA Website Knowledge":{"ai_tool":[[{"node":"AI Agent","type":"ai_tool","index":0}]]},
+    "OpenAI Chat Model":{"ai_languageModel":[[{"node":"AI Agent","type":"ai_languageModel","index":0}]]},
+    "Webhook":{"main":[[{"node":"Fetch Pages","type":"main","index":0}],[{"node":"AI Agent","type":"main","index":0}]]},
+    "AI Agent":{"main":[[{"node":"Respond","type":"main","index":0}]]}
+  }
+}

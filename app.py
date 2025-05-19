@@ -13,6 +13,19 @@ logging.basicConfig(
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
+# -------------------------------------------------
+# Additional informational pages
+# -------------------------------------------------
+
+
+
+# New routes for values page and policy PDF viewer
+
+
+
+
+
+
 @app.route("/")
 def home():        return render_template("index.html")
 
@@ -21,6 +34,16 @@ def politique():   return render_template("politique.html")
 
 @app.route("/contact")
 def contact():     return render_template("contact.html")
+
+# Company values page
+@app.route("/valeurs")
+def valeurs():
+    return render_template("valeurs.html")
+
+# Policy PDF viewer (protected client-side)
+@app.route("/politique-pdf")
+def politique_pdf():
+    return render_template("politique_pdf.html")
 
 @app.route("/health")
 def health():

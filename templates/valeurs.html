@@ -1,0 +1,69 @@
+{# nourrir_flask/templates/valeurs.html #}
+{% extends "base.html" %}
+
+{% block title %}Valeurs – NourrIR{% endblock %}
+
+{% block content %}
+<h1>Nos Valeurs Fondamentales</h1>
+
+<p>
+Chez <strong>NourrIR</strong>, nos décisions et nos créations sont guidées par cinq piliers. Ces valeurs traduisent l’essence même de notre mission : démocratiser le bien-être mental et physique en conjuguant nutrition, psychologie et créativité.
+</p>
+
+<div style="display:flex;flex-wrap:wrap;gap:2.5rem;justify-content:center;margin-top:2.5rem;">
+  <div style="max-width:270px;text-align:center;">
+    <img src="{{ url_for('serve_assets', filename='Brain, Nutrition, Innovation Icon.png') }}" alt="Accessibilité" width="96" style="border:3px solid var(--dopamine-purple);border-radius:50%;background:#fff;">
+    <h3>Accessibilité</h3>
+    <p style="text-align:justify;">
+      Des contenus clairs, multisensoriels et adaptés aux différents niveaux de littératie. Nous pensons qu’un savoir utile est un savoir accessible au plus grand nombre, quels que soient l’âge, la culture ou les limitations fonctionnelles.
+    </p>
+  </div>
+
+  <div style="max-width:270px;text-align:center;">
+    <img src="{{ url_for('serve_assets', filename="Valeurs et Symbole D'Inclusion.png") }}" alt="Inclusion" width="96" style="border:3px solid var(--dopamine-purple);border-radius:50%;background:#fff;">
+    <h3>Inclusion</h3>
+    <p style="text-align:justify;">
+      Nous célébrons la diversité des parcours, des identités et des expériences. L’application est pensée pour refléter cette pluralité : langage non genré, recettes flexitariennes, outils adaptés aux neuro-atypiques.
+    </p>
+  </div>
+
+  <div style="max-width:270px;text-align:center;">
+    <img src="{{ url_for('serve_assets', filename='NourrIR_ Inclusivity and Creativity in Focus.png') }}" alt="Créativité" width="96" style="border:3px solid var(--dopamine-purple);border-radius:50%;background:#fff;">
+    <h3>Créativité</h3>
+    <p style="text-align:justify;">
+      Le processus créatif stimule les circuits de la récompense et favorise la résilience. Nous intégrons des ateliers d’art-thérapie numériques (écriture libre, collage, cuisine intuitive) pour nourrir l’imaginaire autant que le corps.
+    </p>
+  </div>
+
+  <div style="max-width:270px;text-align:center;">
+    <img src="{{ url_for('serve_assets', filename='Logo de NourrIR avec carotte stylisée.png') }}" alt="Autonomie" width="96" style="border:3px solid var(--dopamine-purple);border-radius:50%;background:#fff;">
+    <h3>Autonomie</h3>
+    <p style="text-align:justify;">
+      Chaque utilisateur·rice possède un tableau de bord personnalisé, des objectifs modulables et un coach virtuel qui propose – mais ne dicte jamais – le chemin à suivre.
+    </p>
+  </div>
+
+  <div style="max-width:270px;text-align:center;">
+    <img src="{{ url_for('serve_assets', filename='Smiling Heart on Beige Background.png') }}" alt="Joie" width="96" style="border:3px solid var(--dopamine-purple);border-radius:50%;background:#fff;">
+    <h3>Joie</h3>
+    <p style="text-align:justify;">
+      La recherche de bien-être ne doit pas être austère ! Nous insufflons de la couleur, des défis ludiques et des micro-récompenses pour associer apprentissage et plaisir durable.
+    </p>
+  </div>
+</div>
+
+<h2 style="margin-top:3rem;">Comment ces valeurs se traduisent-elles concrètement ?</h2>
+
+<ul style="font-size:1.05em;line-height:1.6;">
+  <li><b>Contenus multi-formats</b> : audiodescription, sous-titres, fiches faciles à lire et à comprendre.</li>
+  <li><b>Algorithme éthique</b> : transparence sur la collecte de données, opt-in explicite, modèles open-source audités.</li>
+  <li><b>Design co-créatif</b> : prototypes testés avec des groupes représentatifs avant chaque version majeure.</li>
+  <li><b>Partenariats intersectoriels</b> : diététistes, artistes, associations jeunesse et experts santé mentale.</li>
+  <li><b>Célébration collective</b> : badges de progression, événements communautaires, partages de recettes.</li>
+</ul>
+
+<p style="margin-top:2rem;">
+En incarnant ces valeurs au quotidien, <strong>NourrIR</strong> aspire à devenir bien plus qu’une application : un écosystème bienveillant où l’on cultive sa santé globale tout en s’amusant.
+</p>
+
+{% endblock %}

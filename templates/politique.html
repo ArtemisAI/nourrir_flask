@@ -19,10 +19,34 @@
 
 <!-- Downloadable PDF link -->
 <p style="margin-bottom:2em; text-align: center;">
-  <a href="{{ url_for('static', filename='assets/pdf/politique.pdf') }}" download style="font-size:1.1em;">
-    📄 Télécharger la politique d’intégration (PDF)
+  <a id="policy-link" href="#" style="font-size:1.1em;">
+    📄 Consulter la politique d’intégration complète
   </a>
 </p>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const link = document.getElementById('policy-link');
+  if (!link) return;
+  link.addEventListener('click', async evt => {
+    evt.preventDefault();
+    const nom = prompt('Quel est votre prénom ?');
+    if (!nom) return;
+    try {
+      const res = await fetch('{{ url_for('serve_assets', filename='names.json') }}');
+      const noms = await res.json();
+      const ok = noms.map(n => n.toLowerCase()).includes(nom.trim().toLowerCase());
+      if (ok) {
+        window.location.href = '{{ url_for('politique_pdf') }}';
+      } else {
+        alert('Désolé, accès refusé.');
+      }
+    } catch (e) {
+      alert("Erreur lors de la vérification du nom.");
+    }
+  });
+});
+</script>
 
 <h1>Politique d’intégration des nouveaux employés</h1>
 
