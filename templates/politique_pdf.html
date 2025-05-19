@@ -13,10 +13,11 @@
 {% block content %}
 <h1>Politique d’intégration – Version complète</h1>
 
-<a class="download-link" href="{{ url_for('static', filename='assets/pdf/politique.pdf') }}" download>
+# The file is served through the custom `serve_assets` route so we reference it that way
+<a class="download-link" href="{{ url_for('serve_assets', filename='pdf/politique.pdf') }}" download>
   ⬇️ Télécharger le PDF
 </a>
 
-<embed class="pdf-container" src="{{ url_for('static', filename='assets/pdf/politique.pdf') }}#toolbar=0&navpanes=0" type="application/pdf">
+<embed class="pdf-container" src="{{ url_for('serve_assets', filename='pdf/politique.pdf') }}#toolbar=0&navpanes=0" type="application/pdf">
 
 {% endblock %}

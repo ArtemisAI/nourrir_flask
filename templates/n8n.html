@@ -1,0 +1,25 @@
+{# nourrir_flask/templates/n8n.html #}
+{% extends "base.html" %}
+
+{% block title %}Automations n8n{% endblock %}
+
+{% block extra_head %}
+<style>
+  .n8n-iframe { width:100%; height:85vh; border:none; }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>Plateforme d’automatisation n8n</h1>
+
+{% if n8n_url %}
+  <iframe class="n8n-iframe" src="{{ n8n_url }}" loading="lazy"></iframe>
+  <p style="margin-top:0.8em;font-size:0.9em;color:#777;">
+    Si l’éditeur n’apparaît pas, ouvrez :
+    <a href="{{ n8n_url }}" target="_blank" rel="noopener">{{ n8n_url }}</a>
+  </p>
+{% else %}
+  <p>L’URL publique n8n n’est pas configurée.</p>
+{% endif %}
+
+{% endblock %}

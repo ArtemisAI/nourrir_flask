@@ -38,6 +38,9 @@
         <a href="{{ url_for('politique') }}">Politique d’intégration</a> |
         <a href="{{ url_for('valeurs') }}">Valeurs de l’entreprise</a> |
         <a href="{{ url_for('contact') }}">Contact RH</a>
+        {% if N8N_PUBLIC_URL %} |
+          <a href="{{ url_for('n8n_page') }}">Automations (n8n)</a>
+        {% endif %}
     </nav>
     <main>
         {% block content %}{% endblock %}
