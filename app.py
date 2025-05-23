@@ -5,18 +5,16 @@ import os
 import requests
 
 # Configuration for Ollama chat API endpoints
-# For OpenAI-compatible API (v1): set OLLAMA_CHAT_URL to e.g. "https://ollama.artemis-ai.ca/v1/chat/completions"
-# and OLLAMA_MODELS_URL to "https://ollama.artemis-ai.ca/v1/models".
-# Fallback to legacy Ollama API (/api/chat and /api/models).
+# Default to the publicly-hosted Ollama service; override via environment if needed.
 OLLAMA_CHAT_URL = os.getenv(
     "OLLAMA_CHAT_URL",
-    os.getenv("OLLAMA_URL", "http://192.168.2.10:11434/api/chat")
+    "https://ollama.artemis-ai.ca/v1/chat/completions"
 )
 OLLAMA_MODELS_URL = os.getenv(
     "OLLAMA_MODELS_URL",
-    os.getenv("MODELS_URL", "http://192.168.2.10:11434/api/models")
+    "https://ollama.artemis-ai.ca/v1/models"
 )
-# Model identifier, must match an available model from /models
+# Model identifier, must match an available model from /models (default to phi4:latest)
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "phi4:latest")
 
 # Default system prompt for NuRiH Ami
