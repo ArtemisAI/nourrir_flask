@@ -101,15 +101,29 @@
 </div>
 
 <script>
+<<<<<<< Updated upstream
     const N8N_WEBHOOK_URL = 'https://n8n.artemis-ai.ca:8443/webhook/865ac76c-55df-47c0-8277-7fafe74400ab/chat';
+=======
+    // Primary URL is the backend proxy, avoiding CORS issues.
+    const N8N_PROXY_ENDPOINT = '/n8n-chat';
+    // Direct access URLs kept as fallback in case the proxy is unavailable.
+    const N8N_DIRECT_URLS = [
+        'https://n8n.artemis-ai.ca:8443/webhook/3856912a-4b68-441b-ba1a-beb4e64356e0/chat',
+        'https://n8n.artemis-ai.ca/webhook/3856912a-4b68-441b-ba1a-beb4e64356e0/chat'
+    ];
+>>>>>>> Stashed changes
     const HR_SYSTEM_PROMPT = "Tu es l'assistant RH de NourrIR. Réponds de façon aimable, informative et concise aux questions des employés concernant les politiques RH, carrières et vie d'entreprise.";
     const RH_FALLBACK_ENDPOINT = '/nuria-chat';
     let rhServiceOnline = false;
 
     async function checkRhService() {
         try {
-            await fetch(N8N_WEBHOOK_URL, { method: 'GET' });
-            rhServiceOnline = true;
+            const resp = await fetch(N8N_PROXY_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: 'ping' })
+            });
+            rhServiceOnline = resp.ok;
         } catch (err) {
             rhServiceOnline = false;
         }
@@ -178,6 +192,10 @@
         const timeoutId = setTimeout(() => controller.abort(), 60000); // 1 minute timeout
         try {
             const sessionId = getRhSessionId();
+<<<<<<< Updated upstream
+=======
+            const candidateUrls = [N8N_PROXY_ENDPOINT, ...N8N_DIRECT_URLS];
+>>>>>>> Stashed changes
 
             const n8nWebhookUrl = 'https://n8n.artemis-ai.ca:8443/webhook/865ac76c-55df-47c0-8277-7fafe74400ab/chat';
             
