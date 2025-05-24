@@ -225,24 +225,51 @@ def query_n8n(message: str,
 
     headers = {"Content-Type": "application/json"}
 
+    # Build list of URL candidates: primary, fallback, and HTTP variants
+    try:
+        from urllib.parse import urlparse, urlunparse
+    except ImportError:
+        urlparse = urlunparse = None
+    candidates = []
     for url in (primary_url, fallback_url):
+        if url and url not in candidates:
+            candidates.append(url)
+    if urlparse and urlunparse:
+        for url in list(candidates):
+            parsed = urlparse(url)
+            if parsed.scheme == 'https':
+                newp = parsed._replace(scheme='http')
+                http_url = urlunparse(newp)
+                if http_url not in candidates:
+                    candidates.append(http_url)
+    logger.debug(f"query_n8n: URL candidates = {candidates}")
+
+    attempts = []
+    for url in candidates:
         try:
             logger.debug(f"Sending message to n8n webhook {url}: {payload}")
             resp = requests.post(url, json=payload, headers=headers, timeout=timeout)
             logger.debug(f"n8n response status from {url}: {resp.status_code}")
-            if resp.status_code >= 200 and resp.status_code < 300:
+            if 200 <= resp.status_code < 300:
                 try:
                     return resp.json()
                 except ValueError:
-                    # Non-JSON response – return raw text inside dict for consistency
                     return {"text": resp.text}
             else:
-                logger.warning(f"n8n webhook {url} returned HTTP {resp.status_code}")
+                text_snippet = resp.text.strip().replace('\n', ' ')[:200]
+                logger.warning(f"n8n webhook {url} returned HTTP {resp.status_code}: {text_snippet}")
+                attempts.append((url, f"HTTP {resp.status_code}: {text_snippet}"))
         except requests.exceptions.RequestException as e:
             logger.warning(f"Failed to reach n8n webhook {url}: {e}")
+            attempts.append((url, f"Error: {e}"))
             last_error = e
-    # If we reach here, all attempts failed
-    raise last_error if 'last_error' in locals() else Exception("n8n webhook unreachable")
+    # All attempts failed; log detailed summary
+    summary = '; '.join(f"{u} => {m}" for u, m in attempts)
+    logger.error(f"All attempts to contact n8n webhook failed. Attempts: {summary}")
+    if 'last_error' in locals():
+        raise last_error
+    else:
+        raise Exception(f"n8n webhook unreachable. Attempts: {summary}")
 
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
