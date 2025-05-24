@@ -126,17 +126,28 @@
     }
 }
 
+/* Styles for on-scroll reveal */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(25px); /* Start slightly lower */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transition-delay: 0.1s; /* Optional: slight delay before animation starts */
+}
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
 </style>
 {% endblock %}
 
 {% block content %}
-    <h1>Bienvenue chez NourrIR</h1>
-    <p>
-        NourrIR démocratise le bien-être mental & physique via <b>nutrition, psychologie et créativité</b>.
+    <h1 class="reveal-on-scroll">Bienvenue chez NourrIR</h1>
+    <p class="reveal-on-scroll">
+        NourrIR démocratise le bien-être mental et physique via <b>nutrition, psychologie et créativité</b>.
     </p>
     
-    <h2 style="margin-top:2em; text-align:center;">Nos valeurs</h2>
-    <div class="values-grid">
+    <h2 style="margin-top:2em; text-align:center;" class="reveal-on-scroll">Nos valeurs</h2>
+    <div class="values-grid reveal-on-scroll">
         <!-- Accessibilité Card -->
         <div class="value-card-container">
             <div class="value-card">
@@ -241,15 +252,65 @@
         <li>Journal de bord interactif et coach virtuel empathique</li>
         <li>Modèle freemium (accès de base gratuit + modules premium)</li>
     </ul>
-    <h2 style="margin-top:2.5em;">Fondements scientifiques</h2>
+    <h2 style="margin-top:2.5em;">Fondements Scientifiques</h2>
+    <p>Notre approche s'appuie sur des recherches établies et des concepts émergents dans les domaines de la nutrition, de la psychologie et du bien-être :</p>
     <ul>
-        <li>Nutrition personnalisée et santé mentale (Jacka et al., 2023)</li>
-        <li>Intelligence artificielle en diététique (CareyYaYa, 2024)</li>
-        <li>Créativité et régulation émotionnelle (WellPower, 2023)</li>
-        <li>Impact des probiotiques sur l'humeur (Health.com, 2024)</li>
+        <li><strong>Nutrition personnalisée et santé mentale :</strong> Les travaux de chercheurs comme Felice Jacka et son équipe (par exemple, publications autour de 2017-2023) soulignent l'importance de l'alimentation pour la santé mentale.</li>
+        <li><strong>Applications de l'intelligence artificielle en diététique :</strong> L'IA est explorée pour personnaliser les recommandations nutritionnelles et améliorer l'engagement des utilisateurs (Recherches en cours, diverses sources académiques).</li>
+        <li><strong>Créativité et régulation émotionnelle :</strong> Des organisations et des études (comme celles potentiellement menées par des entités telles que "WellPower", rapports autour de 2023) explorent comment les activités créatives peuvent favoriser le bien-être émotionnel.</li>
+        <li><strong>Impact des microbiotiques sur l'humeur :</strong> De nombreuses études scientifiques (consultables sur des bases de données comme PubMed, recherches continues en 2023-2024) investiguent le lien entre le microbiote intestinal (influencé par les probiotiques) et l'humeur.</li>
     </ul>
     <h2 style="margin-top:2.5em;">Potentiel</h2>
     <p>
         NourrIR répond à un besoin croissant d’outils numériques hybrides unissant <b>bien-être, connaissance de soi, plaisir et autonomie</b>. Notre approche multidisciplinaire et engageante nous positionne comme référence en santé globale pour les jeunes et les milieux éducatifs.
     </p>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Apply reveal-on-scroll to elements that have the class directly in HTML
+    const revealElementsDirect = document.querySelectorAll('.reveal-on-scroll');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                // Optional: Unobserve after revealing to prevent re-triggering if desired
+                // observer.unobserve(entry.target);
+            } else {
+                // Optional: Re-hide if scrolling up. For this project, let's keep them visible once revealed.
+                // entry.target.classList.remove('is-visible');
+            }
+        });
+    }, {
+        rootMargin: '0px 0px -50px 0px', // Start animation when element is 50px from bottom of viewport
+        threshold: 0.01 // Even a tiny part of element triggers
+    });
+
+    revealElementsDirect.forEach(element => {
+        observer.observe(element);
+    });
+
+    // Dynamically add 'reveal-on-scroll' to other H2s and their subsequent content blocks
+    document.querySelectorAll('main h2').forEach(h2 => {
+        // Skip if already has the class (like "Nos valeurs" H2)
+        if (!h2.classList.contains('reveal-on-scroll')) {
+            h2.classList.add('reveal-on-scroll');
+            observer.observe(h2);
+        }
+
+        let nextElement = h2.nextElementSibling;
+        if (nextElement) {
+            // Check if next element is a P, UL, or DIV.video-container
+            if (nextElement.tagName === 'P' || nextElement.tagName === 'UL' || 
+                nextElement.classList.contains('video-container')) {
+                // Skip if already has the class (like the .values-grid div)
+                if (!nextElement.classList.contains('reveal-on-scroll')) {
+                     nextElement.classList.add('reveal-on-scroll');
+                     observer.observe(nextElement);
+                }
+            }
+        }
+    });
+});
+</script>
 {% endblock %}

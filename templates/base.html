@@ -16,7 +16,6 @@
             --midnight-navy: #34495E;
             --cloud-gray: #F5F5F5;
             --light-text: #f8f9fa; /* For text on dark backgrounds */
-            /* --unused-variable: #FF0000; Example of an unused variable to be removed */
         }
 
         /* Basic Reset & Body Styles */
@@ -95,10 +94,30 @@
             box-shadow: 0 4px 25px rgba(0,0,0,0.07); 
         }
 
+        /* Placeholder for "Read this page" button */
+        #read-page-button-container {
+            text-align: right; /* Align button to the right */
+            margin-bottom: 1rem; /* Space below the button */
+        }
+
+        #read-page-button {
+            background-color: var(--dopamine-purple);
+            color: var(--light-text);
+            border: none;
+            padding: 0.5em 1em;
+            border-radius: 5px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        #read-page-button:hover {
+            opacity: 0.9;
+        }
+
         /* Footer Styles */
         footer { 
             text-align: center; 
-            color: #aaa; 
+            color: #777; /* Adjusted from #aaa for better readability */
             padding: 1.5rem 1rem; 
             font-size: 0.9em;
             margin-top: 2rem; /* Added margin-top for separation */
@@ -232,6 +251,107 @@
             #nuria-chat-send { padding: 0.5em 1em; font-size: 0.95em; }
         }
         /* Removed duplicate @media (max-width: 480px) block, adjustments are merged into the one above */
+
+        /* Glossary Term Styles */
+        .glossary-term {
+            border-bottom: 1px dotted var(--dopamine-purple);
+            cursor: help;
+            position: relative; /* For tooltip positioning */
+        }
+
+        .glossary-tooltip {
+            position: absolute;
+            background-color: var(--midnight-navy);
+            color: white;
+            padding: 10px 15px; /* Increased padding */
+            border-radius: 8px; /* Softer radius */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* More pronounced shadow */
+            z-index: 1070; /* Ensure it's above most elements, like sticky header/nav */
+            font-size: 0.88em; /* Slightly smaller for tooltip */
+            line-height: 1.5; /* Improved readability in tooltip */
+            width: max-content; /* Adjust to content */
+            max-width: 300px; /* Max width before text wraps */
+            bottom: 130%; /* Default position above the term */
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease-out, visibility 0.25s ease-out, transform 0.25s ease-out;
+            pointer-events: none; /* Tooltip itself shouldn't capture mouse events */
+        }
+
+        .glossary-term:hover .glossary-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-5px); /* Slight lift effect */
+        }
+        /* Arrow for tooltip (optional but nice) */
+        .glossary-tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%; /* At the bottom of the tooltip */
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 6px;
+            border-style: solid;
+            border-color: var(--midnight-navy) transparent transparent transparent;
+        }
+
+        /* Tooltip positioning adjustments (if JS adds these classes) */
+        .glossary-tooltip.position-below {
+            bottom: auto;
+            top: 130%; /* Position below the term */
+        }
+        .glossary-tooltip.position-below::after {
+            top: auto;
+            bottom: 100%; /* At the top of the tooltip, pointing up */
+            border-color: transparent transparent var(--midnight-navy) transparent;
+        }
+
+        /* Quick Tip Popup Styles */
+        .quick-tip-popup {
+            position: fixed;
+            bottom: 20px;
+            right: -400px; /* Start off-screen */
+            width: 300px;
+            background-color: #ffffff;
+            border-left: 5px solid var(--joy-yellow);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            border-radius: 8px 0 0 8px; /* Rounded on the left side */
+            padding: 20px;
+            z-index: 1080; /* Above glossary tooltips, potentially above chatbot toggle if it's lower */
+            transition: right 0.5s ease-in-out;
+            font-family: 'Inter', sans-serif;
+        }
+        .quick-tip-popup.visible {
+            right: 0; /* Slide in */
+        }
+        .quick-tip-popup h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: var(--dopamine-purple);
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.15em;
+        }
+        .quick-tip-popup p {
+            font-size: 0.95em;
+            line-height: 1.6;
+            color: var(--midnight-navy);
+            margin-bottom: 0;
+        }
+        .quick-tip-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.8em;
+            color: #aaa;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .quick-tip-close:hover {
+            color: var(--midnight-navy);
+        }
+
     </style>
     {% block extra_head %}{% endblock %} <!-- This block allows individual pages to add their own specific styles -->
 </head>
@@ -241,19 +361,31 @@
         <div class="slogan">On croque la dopamine.</div>
     </header>
     <nav>
-        <a href="{{ url_for('home') }}">Accueil</a> |
-        <a href="{{ url_for('politique') }}">Politique d’intégration</a> |
-        <a href="{{ url_for('contact') }}">Contact RH</a> |
-        <a href="{{ url_for('coulisses') }}">Les Coulisses</a> |
+        <a href="{{ url_for('home') }}">Accueil</a> <span class="nav-separator">|</span>
+        <a href="{{ url_for('politique') }}">Politique d’intégration</a> <span class="nav-separator">|</span>
+        <a href="{{ url_for('contact') }}">Contact RH</a> <span class="nav-separator">|</span>
+        <a href="{{ url_for('coulisses') }}">Les Coulisses</a> <span class="nav-separator">|</span>
         <a href="{{ url_for('rh_chatbot') }}">Demandez aux RH</a>
     </nav>
     <main>
+        <!-- Placeholder for "Read this page" button -->
+        <div id="read-page-button-container">
+            <button id="read-page-button" title="Lire le contenu de cette page">🔊 Lire cette page</button>
+        </div>
         {% block content %}{% endblock %}
     </main>
     <footer>
         <p>&copy; 2025 NourrIR — projet fictif à but pédagogique. <a href="{{ url_for('test_zone') }}" style="color: #bbb; text-decoration: none; font-size: 2px;">.</a></p>
         <p style="margin-top: 0.5em;">UdeM REI 1850 - Equipe 4</p>
     </footer>
+
+    <!-- Quick Tip Popup HTML Structure -->
+    <div id="quick-tip-popup" class="quick-tip-popup" style="/* display:none; is handled by class now */">
+        <span id="quick-tip-close" class="quick-tip-close" title="Fermer">&times;</span>
+        <h4>Le saviez-vous ?</h4>
+        <p id="quick-tip-text">Ceci est une astuce par défaut qui sera remplacée.</p>
+    </div>
+
     {% block chatbot %}
     <!-- NurrIA Chatbot Popup (présent sur chaque page) -->
     <style>
@@ -506,7 +638,334 @@
       }
     }
     </script>
+
+    <script>
+    // TTS Functionality
+    const ttsButton = document.getElementById('read-page-button');
+    const synth = window.speechSynthesis;
+    let voices = [];
+    let frenchVoice = null;
+    let currentUtterance = null; // To keep track of the current speech
+
+    function populateVoiceList() {
+        if (typeof synth === 'undefined') {
+            console.error('Speech Synthesis API not supported.');
+            if (ttsButton) {
+                ttsButton.disabled = true;
+                ttsButton.textContent = 'TTS non supporté';
+            }
+            return;
+        }
+        voices = synth.getVoices();
+        frenchVoice = voices.find(voice => voice.lang.startsWith('fr')) || null;
+
+        if (voices.length > 0 && !frenchVoice) {
+            console.warn('Aucune voix française trouvée. Utilisation de la voix par défaut.');
+        } else if (voices.length === 0 && ttsButton) {
+            console.error('Aucune voix disponible pour la synthèse vocale.');
+            ttsButton.disabled = true;
+            ttsButton.textContent = 'Voix non dispo.';
+        }
+        
+        // If voices are loaded asynchronously, we might need to wait for them
+        // This is crucial for some browsers.
+        if (synth.onvoiceschanged !== undefined) {
+            synth.onvoiceschanged = () => {
+                voices = synth.getVoices();
+                frenchVoice = voices.find(voice => voice.lang.startsWith('fr')) || null;
+                if (!frenchVoice && voices.length > 0) {
+                     console.warn('Aucune voix française trouvée après onvoiceschanged. Utilisation de la voix par défaut si disponible.');
+                }
+                 if (ttsButton && ttsButton.disabled && voices.length > 0) { // Re-enable if voices loaded late
+                    ttsButton.disabled = false;
+                    ttsButton.textContent = '🔊 Lire cette page';
+                 }
+            };
+        }
+    }
+
+    populateVoiceList(); // Initial call
+
+    function playSpeech(textToRead) {
+        if (!synth || !textToRead) {
+            console.error('Speech synthesis not available or no text provided.');
+            return;
+        }
+
+        if (synth.speaking) {
+            // stopSpeech(); // Stop current speech before starting new one
+            // console.warn('Speech is already in progress. Stopping current and starting new.');
+             return; // Or simply don't start a new one if already speaking from this button
+        }
+
+        currentUtterance = new SpeechSynthesisUtterance(textToRead);
+        currentUtterance.onstart = () => {
+            console.log('TTS started.');
+            if (ttsButton) ttsButton.textContent = 'Arrêter la lecture';
+        };
+        currentUtterance.onend = () => {
+            console.log('TTS ended.');
+            if (ttsButton) ttsButton.textContent = '🔊 Lire cette page';
+            currentUtterance = null;
+        };
+        currentUtterance.onerror = (event) => {
+            console.error('SpeechSynthesisUtterance.onerror', event);
+            if (ttsButton) {
+                ttsButton.textContent = 'Erreur Lecture';
+                setTimeout(() => { // Reset button text after a delay
+                    if (!synth.speaking) ttsButton.textContent = '🔊 Lire cette page';
+                }, 2000);
+            }
+            currentUtterance = null;
+        };
+
+        if (frenchVoice) {
+            currentUtterance.voice = frenchVoice;
+            currentUtterance.lang = frenchVoice.lang;
+        } else {
+            currentUtterance.lang = 'fr-FR'; 
+            console.log('Utilisation de la voix par défaut du navigateur pour le français (ou tentative).');
+        }
+        
+        synth.speak(currentUtterance);
+    }
+
+    function pauseSpeech() { // Not used by the main button for now, but good to have
+        if (synth && synth.speaking && !synth.paused) {
+            synth.pause();
+            console.log('TTS paused.');
+        }
+    }
+
+    function resumeSpeech() { // Not used by the main button for now, but good to have
+        if (synth && synth.paused) {
+            synth.resume();
+            console.log('TTS resumed.');
+        }
+    }
+
+    function stopSpeech() {
+        if (synth && (synth.speaking || synth.paused)) {
+            synth.cancel(); 
+            console.log('TTS stopped.');
+            // onend should reset, but ensure it does
+            if (ttsButton) ttsButton.textContent = '🔊 Lire cette page';
+            currentUtterance = null; 
+        }
+    }
+
+    if (ttsButton) {
+        ttsButton.addEventListener('click', () => {
+            if (!synth) {
+                alert('Désolé, la synthèse vocale n\'est pas supportée par votre navigateur.');
+                return;
+            }
+            // Check if voices are loaded, especially for browsers like Firefox
+            if (synth.getVoices().length === 0 && !frenchVoice) {
+                 console.log("Les voix ne sont pas encore chargées. Tentative de rechargement.");
+                 populateVoiceList(); // Try to populate again
+                 if (synth.getVoices().length === 0) { // Check again
+                    alert("Les voix de synthèse ne sont pas encore prêtes. Veuillez réessayer dans un moment.");
+                    return;
+                 }
+            }
+
+
+            if (synth.speaking) {
+                stopSpeech();
+            } else {
+                const mainContentElement = document.querySelector('main');
+                let pageText = "Le contenu principal n'a pas pu être trouvé pour la lecture.";
+
+                if (mainContentElement) {
+                    const mainClone = mainContentElement.cloneNode(true);
+                    
+                    // Remove elements we definitely don't want to read. More selectors can be added.
+                    mainClone.querySelectorAll(
+                        '#read-page-button-container, script, style, nav, footer, header, ' +
+                        '.video-container, .slogan, .nav-separator, ' +
+                        '#nuria-chatbot-toggle, #nuria-chatbot-box, ' + 
+                        'form, button, input, textarea, label, figure, figcaption, img, ' + // Common interactive/non-textual elements
+                        '[aria-hidden="true"]' // Elements meant to be hidden from assistive technologies
+                    ).forEach(el => el.remove());
+                    
+                    let textParts = [];
+                    // Prioritize semantic elements, then fallback to others.
+                    // Process in document order if possible, or by specific selectors first
+                    mainClone.querySelectorAll('article, section, h1, h2, h3, h4, h5, h6, p, li, th, td, blockquote, q')
+                      .forEach(el => {
+                        const elText = el.innerText ? el.innerText.trim() : "";
+                        if (elText.length > 0) {
+                            // Avoid adding text from elements that are children of already processed elements (simple check)
+                            let isChildOfProcessed = false;
+                            let parent = el.parentElement;
+                            while(parent && parent !== mainClone) {
+                                if (parent.hasAttribute('data-tts-processed')) {
+                                    isChildOfProcessed = true;
+                                    break;
+                                }
+                                parent = parent.parentElement;
+                            }
+                            if (!isChildOfProcessed) {
+                                textParts.push(elText);
+                                el.setAttribute('data-tts-processed', 'true'); // Mark as processed
+                            }
+                        }
+                    });
+                    // Cleanup data attributes
+                     mainClone.querySelectorAll('[data-tts-processed="true"]').forEach(el => el.removeAttribute('data-tts-processed'));
+
+
+                    if (textParts.length > 0) {
+                        pageText = textParts.join('. \n'); 
+                    } else {
+                        // Fallback if specific selectors yield nothing, try a more general approach
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = mainClone.innerHTML;
+                        // Remove known noisy tags again if they slipped through or were part of broader elements
+                        tempDiv.querySelectorAll('script, style, button, input, select, textarea, img, svg, canvas, form, [aria-hidden="true"]').forEach(el => el.remove());
+                        pageText = tempDiv.textContent || tempDiv.innerText || "";
+                        if (pageText.trim().length === 0) {
+                             pageText = "Aucun contenu textuel significatif trouvé dans la section principale après filtrage.";
+                        }
+                    }
+                    pageText = pageText.replace(/\s+/g, ' ').trim(); // Normalize whitespace
+                }
+                
+                if (pageText.length > 5) { // Only play if there's meaningful text
+                    console.log("Texte à lire:", pageText);
+                    playSpeech(pageText);
+                } else {
+                    console.warn("Texte extrait trop court ou vide, lecture annulée.");
+                    alert("Impossible d'extraire un contenu significatif à lire depuis cette page.");
+                }
+            }
+        });
+    } else {
+        console.warn("#read-page-button non trouvé. La fonctionnalité TTS ne sera pas activée par bouton.");
+    }
+
+    // Ensure voices are populated, especially for browsers where getVoices() is async and might take time.
+    // The initial populateVoiceList() and onvoiceschanged should handle most cases.
+    // This is an additional check if button exists but voices somehow weren't ready.
+    if (ttsButton && synth && synth.getVoices().length === 0) {
+        console.log("Tentative de chargement différé des voix pour la synthèse vocale...");
+        if (synth.onvoiceschanged === undefined) { // If not already set or if it was cleared
+            synth.onvoiceschanged = populateVoiceList;
+        }
+        // For some browsers, a direct call after a short delay might also help trigger voice loading
+        // setTimeout(populateVoiceList, 500); 
+    }
+    </script>
     <!-- Fin NurrIA -->
+
+    <script>
+    // Interactive Glossary Tooltip Functionality
+    document.addEventListener('DOMContentLoaded', function () {
+        // Quick Tip Functionality
+        const quickTipPopup = document.getElementById('quick-tip-popup');
+        const quickTipTextElement = document.getElementById('quick-tip-text');
+        const quickTipCloseButton = document.getElementById('quick-tip-close');
+
+        const tips = [
+            { title: "💡 Le saviez-vous ?", content: "Une poignée d'amandes peut être une excellente source d'énergie et de magnésium !" },
+            { title: "✨ Astuce créative", content: "Gardez un carnet et un stylo à portée de main pour noter les idées dès qu'elles surgissent !" },
+            { title: "🧘 Bien-être", content: "Prendre quelques minutes pour une respiration profonde peut réduire le stress et améliorer la concentration." },
+            { title: "🥗 Nutrition", content: "Variez les couleurs dans votre assiette pour un maximum de vitamines et minéraux." },
+            { title: "🎨 Inspiration", content: "Visitez un nouvel endroit ou écoutez un nouveau style de musique pour stimuler votre créativité." }
+        ];
+
+        function showRandomTip() {
+            if (!quickTipPopup || !quickTipTextElement || sessionStorage.getItem('quickTipDismissed')) {
+                return;
+            }
+
+            const randomIndex = Math.floor(Math.random() * tips.length);
+            const randomTip = tips[randomIndex];
+            
+            quickTipPopup.querySelector('h4').textContent = randomTip.title;
+            quickTipTextElement.textContent = randomTip.content;
+            
+            // quickTipPopup.style.display = 'block'; // Handled by class
+            quickTipPopup.classList.add('visible');
+        }
+
+        if (quickTipCloseButton) {
+            quickTipCloseButton.addEventListener('click', function() {
+                quickTipPopup.classList.remove('visible');
+                // quickTipPopup.style.display = 'none'; // Handled by class transition
+                sessionStorage.setItem('quickTipDismissed', 'true'); // Remember dismissal for the session
+            });
+        }
+
+        // Show tip after a delay, only if not dismissed this session
+        if (!sessionStorage.getItem('quickTipDismissed')) {
+            setTimeout(showRandomTip, 7000); // Show after 7 seconds
+        }
+
+        // Glossary functionality (existing code)
+        const glossaryTerms = document.querySelectorAll('.glossary-term');
+
+        glossaryTerms.forEach(term => {
+            let tooltip = null; // To hold the tooltip element
+
+            term.addEventListener('mouseenter', function () {
+                if (tooltip) return; // Tooltip already exists
+
+                const definition = this.dataset.definition;
+                if (!definition) return;
+
+                tooltip = document.createElement('div');
+                tooltip.className = 'glossary-tooltip';
+                tooltip.textContent = definition;
+                this.appendChild(tooltip); // Append to the term for relative positioning
+
+                // Basic viewport collision detection and adjustment
+                const termRect = this.getBoundingClientRect();
+                const tooltipRect = tooltip.getBoundingClientRect();
+
+                // Default position is above (CSS handles this with bottom: 130%)
+                // Check if tooltip goes off the top of the viewport
+                if (tooltipRect.top < 0) {
+                    tooltip.style.bottom = 'auto';
+                    tooltip.style.top = '130%'; // Position below
+                    // Adjust arrow for below position (CSS might need a class for this)
+                    tooltip.classList.add('position-below'); 
+                } else {
+                    tooltip.classList.remove('position-below');
+                }
+
+                // Check left/right viewport collision
+                if (tooltipRect.left < 5) { // 5px buffer
+                    tooltip.style.left = '0';
+                    tooltip.style.transform = 'translateX(0)';
+                } else if (tooltipRect.right > window.innerWidth - 5) {
+                    tooltip.style.left = 'auto';
+                    tooltip.style.right = '0';
+                    tooltip.style.transform = 'translateX(0)';
+                } else {
+                    // Reset to default if no collision or if previously adjusted
+                    tooltip.style.left = '50%';
+                    tooltip.style.right = 'auto';
+                    tooltip.style.transform = 'translateX(-50%)';
+                     // Re-apply potential lift if it was reset by horizontal adjustment
+                    if (!tooltip.classList.contains('position-below')) {
+                         tooltip.style.transform = 'translateX(-50%) translateY(-5px)';
+                    } else {
+                         tooltip.style.transform = 'translateX(-50%) translateY(5px)'; // lift for below
+                    }
+                }
+            });
+
+            term.addEventListener('mouseleave', function () {
+                if (tooltip) {
+                    this.removeChild(tooltip);
+                    tooltip = null;
+                }
+            });
+        });
+    });
+    </script>
     {% endblock %}
 </body>
 </html>

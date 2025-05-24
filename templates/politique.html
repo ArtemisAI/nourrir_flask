@@ -3,10 +3,76 @@
 
 {% block title %}Politique d’intégration – NourrIR{% endblock %}
 
+{% block extra_head %}
+<style>
+/* Styles for on-scroll reveal (copied from index.html logic) */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transition-delay: 0.1s;
+}
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Enhanced table styling */
+.styled-table {
+    border-collapse: collapse;
+    margin: 1.5em 0;
+    font-size: 0.9em;
+    width: 100%; /* Or a specific width like 80% and margin auto */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.07);
+    border-radius: 8px;
+    overflow: hidden; /* For border-radius on table */
+}
+.styled-table thead tr {
+    background-color: var(--dopamine-purple);
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd; /* Light line between rows */
+}
+.styled-table tbody tr {
+    background-color: #fdfdff; /* Slightly off-white for rows */
+}
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid var(--dopamine-purple);
+}
+.styled-table tbody tr.active-row { /* Example hover/active */
+    font-weight: bold;
+    color: var(--dopamine-purple);
+}
+.policy-section h1, .policy-section h2, .policy-section h3 {
+    margin-bottom: 0.5em; /* Adjust spacing for policy headings */
+}
+.policy-section p, .policy-section ul, .policy-section ol {
+    margin-bottom: 1em; /* Consistent bottom margin for text blocks */
+    line-height: 1.7; /* Slightly more line height for readability */
+}
+.policy-section ul, .policy-section ol {
+    padding-left: 20px; /* Standard indentation */
+}
+.policy-section li {
+    margin-bottom: 0.5em;
+}
+/* Center align specific containers */
+.centered-container {
+    text-align: center;
+    margin-top: 1.5em;
+    margin-bottom: 2em;
+}
+</style>
+{% endblock %}
+
 {% block content %}
 
-<!-- YouTube video embed -->
-<div class="video-container" style="margin-bottom: 1.5em; text-align: center;">
+<div class="video-container reveal-on-scroll centered-container" style="margin-bottom: 1.5em;">
   <iframe
     width="560" height="315"
     src="https://www.youtube.com/embed/8c5-p9Ag6Qg"
@@ -17,128 +83,138 @@
   </iframe>
 </div>
 
-<!-- Downloadable PDF link -->
-<p style="margin-bottom:2em; text-align: center;">
+<p class="reveal-on-scroll centered-container">
   <a href="{{ url_for('static', filename='assets/pdf/politique.pdf') }}" download style="font-size:1.1em;">
     📄 Télécharger la politique d’intégration (PDF)
   </a>
 </p>
 
-<h1>Politique d’intégration des nouveaux employés</h1>
+<div class="policy-section">
+    <h1 class="reveal-on-scroll">Politique d’intégration des nouveaux employés</h1>
 
-<h2>0. Objectif et portée</h2>
-<p>
-Cette politique définit le processus structuré d’accueil (<em>onboarding</em>) appliqué par NourrIR afin de :
-<ul>
-    <li>garantir une intégration rapide, inclusive et motivante ;</li>
-    <li>transmettre les valeurs d’<strong>accessibilité, inclusion, pluridisciplinarité, autonomie, joie et créativité</strong> ;</li>
-    <li>assurer la conformité légale et la sécurité des données (RGPD, Loi 25, <a href="https://www.hhs.gov/hipaa/" target="_blank">HIPAA‑équivalent</a> lorsque pertinent) ;</li>
-    <li>optimiser la rétention des talents et la montée en compétences dans les 12 premiers mois.</li>
-</ul>
-La politique s’applique à <strong>tous les nouveaux employés, stagiaires et consultants</strong> de NourrIR, qu’ils travaillent sur site, en télétravail ou en mode hybride.
-</p>
+    <h2 class="reveal-on-scroll">🎯 0. Objectif et portée</h2>
+    <div class="reveal-on-scroll">
+        <p>
+        Cette politique définit le processus structuré d’accueil (<em>onboarding</em>) appliqué par NourrIR afin de :
+        <ul>
+            <li>garantir une intégration rapide, inclusive et motivante ;</li>
+            <li>transmettre les valeurs d’<strong>accessibilité, inclusion, pluridisciplinarité, autonomie, joie et créativité</strong> ;</li>
+            <li>assurer la conformité légale et la sécurité des données (<span class="glossary-term" data-definition="Règlement Général sur la Protection des Données - une réglementation de l'Union européenne sur la protection des données et la vie privée.">RGPD</span>, Loi 25, <a href="https://www.hhs.gov/hipaa/" target="_blank">HIPAA‑équivalent</a> lorsque pertinent) ;</li>
+            <li>optimiser la rétention des talents et la montée en compétences dans les 12 premiers mois.</li>
+        </ul>
+        La politique s’applique à <strong>tous les nouveaux employés, stagiaires et consultants</strong> de NourrIR, qu’ils travaillent sur site, en télétravail ou en mode hybride.
+        </p>
+    </div>
 
-<h2>1. Pré‑onboarding : de l’acceptation de l’offre au Jour 0</h2>
-<ul>
-    <li>Envoi du <strong>courriel de bienvenue</strong> personnalisé dans les 24 h suivant la signature.</li>
-    <li>Signature électronique du contrat & formulaires (contrat, NDA, politique données).</li>
-    <li>Checklist IT : création compte Microsoft 365, accès GitHub, SIRH BambooHR, VPN.</li>
-    <li>Livraison du <strong>Welcome Kit créatif</strong> (carnet de croquis, crayons NourrIR, livre “Brain Food”).</li>
-    <li>Alignement culturel : vidéo de présentation « On croque la dopamine » (CEO), assignation d’un <strong>Buddy pluridisciplinaire</strong>.</li>
-</ul>
+    <h2 class="reveal-on-scroll">📋 1. Pré‑onboarding : de l’acceptation de l’offre au Jour 0</h2>
+    <ul class="reveal-on-scroll">
+        <li>Envoi du <strong>courriel de bienvenue</strong> personnalisé dans les 24 h suivant la signature.</li>
+        <li>Signature électronique du contrat et formulaires (contrat, NDA, politique données).</li>
+        <li>Checklist IT : création compte Microsoft 365, accès GitHub, SIRH BambooHR, VPN.</li>
+        <li>Livraison du <strong>Welcome Kit créatif</strong> (carnet de croquis, crayons NourrIR, livre “Brain Food”).</li>
+        <li>Alignement culturel : vidéo de présentation « On croque la dopamine » (CEO), assignation d’un <strong>Buddy pluridisciplinaire</strong>.</li>
+    </ul>
 
-<h2>2. Jour 1 : accueil officiel et orientation</h2>
-<ul>
-    <li><b>09 h 00 :</b> Petit‑déj « Brain‑Boost » (smoothies oméga‑3, playlist lo‑fi)</li>
-    <li><b>09 h 30 :</b> Session « Culture & Valeurs » (présentation + quizz)</li>
-    <li><b>11 h 00 :</b> Tour des locaux & stand‑up Scrum (Lab créatif, cuisine‑test, studio podcast)</li>
-    <li><b>13 h 30 :</b> Activation des accès + démo app NourrIR</li>
-    <li><b>15 h 00 :</b> Atelier « Collage Dopamine »</li>
-    <li><b>16 h 00 :</b> Entretien flash 1‑to‑1 (clarification attentes, Q/R)</li>
-</ul>
+    <h2 class="reveal-on-scroll">💡 2. Jour 1 : accueil officiel et orientation</h2>
+    <ul class="reveal-on-scroll">
+        <li><b>09 h 00 :</b> Petit‑déj « Brain‑Boost » (smoothies oméga‑3, playlist lo‑fi)</li>
+        <li><b>09 h 30 :</b> Session « Culture et Valeurs » (présentation + quizz)</li>
+        <li><b>11 h 00 :</b> Tour des locaux et stand‑up Scrum (Lab créatif, cuisine‑test, studio podcast)</li>
+        <li><b>13 h 30 :</b> Activation des accès et démo app NourrIR</li>
+        <li><b>15 h 00 :</b> Atelier « Collage Dopamine »</li>
+        <li><b>16 h 00 :</b> Entretien flash 1‑to‑1 (clarification attentes, Q/R)</li>
+    </ul>
 
-<h2>3. Suivi structuré (0–12 mois)</h2>
-<ul>
-    <li><b>Semaine 1 :</b> Buddy Check‑in (questions, charge émotionnelle, Mood Tracker IA)</li>
-    <li><b>Semaine 2 :</b> Formation RGPD & Sécurité (quiz + micro‑learning)</li>
-    <li><b>Mois 1 :</b> Entretien 30/60/90 (model SHRM, feedback, ajustement OKR)</li>
-    <li><b>Mois 3 :</b> <strong>Bilan créatif « Dopamine Dash »</strong> (présentation projet personnel, évaluation probation)</li>
-    <li><b>Mois 6 :</b> Entretien intermédiaire & Plan carrière</li>
-    <li><b>Mois 9 :</b> Sondage eNPS ciblé (engagement, idées d’amélioration)</li>
-    <li><b>Année 1 :</b> <strong>Évaluation annuelle + Fête Anniv</strong> (performance, révision salaire, stratégie rétention)</li>
-</ul>
+    <h2 class="reveal-on-scroll">📈 3. Suivi structuré (0–12 mois)</h2>
+    <ul class="reveal-on-scroll">
+        <li><b>Semaine 1 :</b> Buddy Check‑in (questions, charge émotionnelle, Mood Tracker IA)</li>
+        <li><b>Semaine 2 :</b> Formation <span class="glossary-term" data-definition="Règlement Général sur la Protection des Données - une réglementation de l'Union européenne sur la protection des données et la vie privée.">RGPD</span> et Sécurité (quiz + micro‑learning)</li>
+        <li><b>Mois 1 :</b> Entretien 30/60/90 (modèle SHRM, feedback, ajustement OKR)</li>
+        <li><b>Mois 3 :</b> <strong>Bilan créatif « Dopamine Dash »</strong> (présentation projet personnel, évaluation probation)</li>
+        <li><b>Mois 6 :</b> Entretien intermédiaire et Plan carrière</li>
+        <li><b>Mois 9 :</b> Sondage eNPS ciblé (engagement, idées d’amélioration)</li>
+        <li><b>Année 1 :</b> <strong>Évaluation annuelle et Fête Anniv</strong> (performance, révision salaire, stratégie rétention)</li>
+    </ul>
 
-<h2>4. Rôles & Responsabilités</h2>
-<ul>
-    <li><strong>Talent & Culture</strong> : pilote le programme, collecte KPI, anime la culture.</li>
-    <li><strong>Gestionnaire</strong> : fixe objectifs, assure coaching, valide progression.</li>
-    <li><strong>Buddy</strong> : soutien quotidien, intégration sociale, partage pratiques internes.</li>
-    <li><strong>IT Support</strong> : provisioning matériel, sécurité informations.</li>
-    <li><strong>Nouvel employé</strong> : acteur de son parcours, complète modules, sollicite feedback.</li>
-</ul>
+    <h2 class="reveal-on-scroll">👥 4. Rôles et Responsabilités</h2>
+    <ul class="reveal-on-scroll">
+        <li><strong>Talent et Culture</strong> : pilote le programme, collecte KPI, anime la culture.</li>
+        <li><strong>Gestionnaire</strong> : fixe objectifs, assure coaching, valide progression.</li>
+        <li><strong>Buddy</strong> : soutien quotidien, intégration sociale, partage pratiques internes.</li>
+        <li><strong>IT Support</strong> : provisioning matériel, sécurité informations.</li>
+        <li><strong>Nouvel employé</strong> : acteur de son parcours, complète modules, sollicite feedback.</li>
+    </ul>
 
-<h2>5. Évaluation et amélioration continue</h2>
-<ul>
-    <li><strong>Taux de rétention à 12 mois</strong> (≥ 90 %)</li>
-    <li><strong>Time‑to‑Productivity (TTP)</strong> (≤ 8 semaines)</li>
-    <li><strong>eNPS « Nouveaux »</strong> (≥ 50)</li>
-    <li><strong>Taux de complétion modules IA</strong> (100 %)</li>
-    <li><strong>Feedback qualitatif</strong> (rapport d’étonnement & entretiens 3 mois)</li>
-</ul>
-<p>
-Les données sont analysées <strong>trimestriellement</strong> par RH ; des ajustements sont apportés suivant la méthode PDCA (<a href="https://fr.wikipedia.org/wiki/Roue_de_Deming" target="_blank">Plan‑Do‑Check‑Act</a>).
-</p>
+    <h2 class="reveal-on-scroll">✅ 5. Évaluation et amélioration continue</h2>
+    <div class="reveal-on-scroll">
+        <ul>
+            <li><strong>Taux de rétention à 12 mois</strong> (≥ 90 %)</li>
+            <li><strong>Time‑to‑Productivity (TTP)</strong> (≤ 8 semaines)</li>
+            <li><strong>eNPS « Nouveaux »</strong> (≥ 50)</li>
+            <li><strong>Taux de complétion modules IA</strong> (100 %)</li>
+            <li><strong>Feedback qualitatif</strong> (rapport d’étonnement et entretiens 3 mois)</li>
+        </ul>
+        <p>
+        Les données sont analysées <strong>trimestriellement</strong> par RH ; des ajustements sont apportés suivant la méthode PDCA (<a href="https://fr.wikipedia.org/wiki/Roue_de_Deming" target="_blank">Plan‑Do‑Check‑Act</a>).
+        </p>
+    </div>
 
-<h2>6. Annexes</h2>
-<ol>
-    <li>Checklists détaillées (voir SharePoint &gt; Onboarding &gt; Checklists).</li>
-    <li>Livret d’accueil « On croque la dopamine » (PDF interactif).</li>
-    <li>Listes d’outils IA utilisés et bonnes pratiques d’éthique.</li>
-    <li>Références externes : 
-      <a href="https://www.shrm.org/resourcesandtools/hr-topics/talent-acquisition/pages/onboarding-employee.aspx" target="_blank">SHRM Onboarding Toolkit (2024)</a>, 
-      <a href="https://www.cipd.org/en/knowledge/factsheets/induction-factsheet/" target="_blank">CIPD Induction Factsheet (2023)</a>, 
-      <a href="https://hbr.org/2024/01/onboarding-new-employees" target="_blank">HBR « Onboarding New Employees » (2024)</a>,
-      <a href="https://www.cambridge.org/core/journals/nutritional-neuroscience/article/nutritional-psychiatry-review/2572E4E84E4BC21777C3B1E7DEEEB28B" target="_blank">Jacka F. et al., <em>Nutritional Psychiatry Review</em> (2023)</a>, 
-      <a href="https://www.iso.org/fr/standard/62085.html" target="_blank">ISO 9001 §7.2 habilitations</a>.
-    </li>
-</ol>
+    <h2 class="reveal-on-scroll">📎 6. Annexes</h2>
+    <ol class="reveal-on-scroll">
+        <li>Checklists détaillées (voir SharePoint &gt; Onboarding &gt; Checklists).</li>
+        <li>Livret d’accueil « On croque la dopamine » (PDF interactif).</li>
+        <li>Listes d’outils IA utilisés et bonnes pratiques d’éthique.</li>
+        <li>Références externes : 
+          <a href="https://www.shrm.org/resourcesandtools/hr-topics/talent-acquisition/pages/onboarding-employee.aspx" target="_blank">SHRM Onboarding Toolkit (2024)</a>, 
+          <a href="https://www.cipd.org/en/knowledge/factsheets/induction-factsheet/" target="_blank">CIPD Induction Factsheet (2023)</a>, 
+          <a href="https://hbr.org/2024/01/onboarding-new-employees" target="_blank">HBR « Onboarding New Employees » (2024)</a>,
+          <a href="https://www.cambridge.org/core/journals/nutritional-neuroscience/article/nutritional-psychiatry-review/2572E4E84E4BC21777C3B1E7DEEEB28B" target="_blank">Jacka F. et al., <em>Nutritional Psychiatry Review</em> (2023)</a>, 
+          <a href="https://www.iso.org/fr/standard/62085.html" target="_blank">ISO 9001 §7.2 habilitations</a>.
+        </li>
+    </ol>
 
-<h2>7. Historique des versions</h2>
-<table border="1" cellpadding="6" style="border-collapse:collapse;background:#fafafd;">
-<tr>
-    <th>Version</th>
-    <th>Date</th>
-    <th>Modifications</th>
-    <th>Auteur</th>
-</tr>
-<tr>
-    <td>1.0</td>
-    <td>17 mai 2025</td>
-    <td>Création initiale</td>
-    <td>Talent & Culture / ChatGPT</td>
-</tr>
-</table>
+    <h2 class="reveal-on-scroll">📅 7. Historique des versions</h2>
+    <table class="styled-table reveal-on-scroll">
+        <thead>
+            <tr>
+                <th>Version</th>
+                <th>Date</th>
+                <th>Modifications</th>
+                <th>Auteur</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1.0</td>
+                <td>17 mai 2025</td>
+                <td>Création initiale</td>
+                <td>Talent et Culture / ChatGPT</td>
+            </tr>
+        </tbody>
+    </table>
 
-<div style="margin-top:2em;font-size:0.98em;color:#555;">
-<b>IA utilisées pour la rédaction de ce document :</b>
-<ul>
-<li><em><a href="https://chat.openai.com/" target="_blank">ChatGPT</a></em> (OpenAI) : structuration et rédaction initiale.</li>
-<li><em><a href="https://copilot.microsoft.com/" target="_blank">Microsoft Copilot</a></em> : génération de checklists et tableaux.</li>
-<li><em><a href="https://gemini.google.com/" target="_blank">Gemini</a></em> (Google) : suggestion d’activités créatives jour 1.</li>
-<li><em><a href="https://www.midjourney.com/" target="_blank">Midjourney</a></em> : visuels d’illustration welcome kit.</li>
-</ul>
-Les contenus générés ont été relus et validés par l’équipe RH afin de garantir la conformité légale et l’adéquation culturelle.
+    <div class="reveal-on-scroll" style="margin-top:2em;font-size:0.98em;color:#555;">
+    <b>IA utilisées pour la rédaction de ce document :</b>
+    <ul>
+    <li><em><a href="https://chat.openai.com/" target="_blank">ChatGPT</a></em> (OpenAI) : structuration et rédaction initiale.</li>
+    <li><em><a href="https://copilot.microsoft.com/" target="_blank">Microsoft Copilot</a></em> : génération de checklists et tableaux.</li>
+    <li><em><a href="https://gemini.google.com/" target="_blank">Gemini</a></em> (Google) : suggestion d’activités créatives jour 1.</li>
+    <li><em><a href="https://www.midjourney.com/" target="_blank">Midjourney</a></em> : visuels d’illustration welcome kit.</li>
+    </ul>
+    Les contenus générés ont été relus et validés par l’équipe RH afin de garantir la conformité légale et l’adéquation culturelle.
+    </div>
 </div>
 
-<!-- HTML for the "Ask NurrIA" popup -->
+<!-- HTML for the "Ask NurrIA" popup (already present, no changes needed to its structure) -->
 <div id="ask-nuria-popup" style="display: none; position: absolute; background-color: var(--dopamine-purple); color: white; padding: 8px 12px; border-radius: 20px; cursor: pointer; z-index: 1050; box-shadow: 0 2px 10px rgba(0,0,0,0.2); font-size: 0.9em; transition: opacity 0.2s, transform 0.2s;">
     Demander à NurrIA 💡
 </div>
 
 <script>
+// Ask NurrIA Popup Script (already present, no changes needed to its logic)
 document.addEventListener('DOMContentLoaded', () => {
     const askNuriaPopup = document.getElementById('ask-nuria-popup');
-    const policyContentArea = document.querySelector('main'); // Target the main content area
+    const policyContentArea = document.querySelector('main'); 
     let currentSelectedText = '';
     let popupIsVisible = false;
 
@@ -148,35 +224,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showAskPopup(x, y) {
-        // Adjust x to ensure popup doesn't go off-screen right, with a small buffer
         const maxX = window.innerWidth - askNuriaPopup.offsetWidth - 15;
         const finalX = Math.min(x, maxX);
         
         askNuriaPopup.style.left = finalX + 'px';
         askNuriaPopup.style.top = y + 'px';
         askNuriaPopup.style.display = 'block';
-        askNuriaPopup.style.opacity = '1'; // For fade-in effect
+        askNuriaPopup.style.opacity = '1'; 
         askNuriaPopup.style.transform = 'translateY(0)';
         popupIsVisible = true;
     }
 
     function hideAskPopup() {
         askNuriaPopup.style.opacity = '0';
-        askNuriaPopup.style.transform = 'translateY(-5px)'; // Slight move up on hide
+        askNuriaPopup.style.transform = 'translateY(-5px)'; 
         setTimeout(() => {
             if (askNuriaPopup.style.opacity === '0') {
                 askNuriaPopup.style.display = 'none';
             }
-        }, 200); // Corresponds to transition duration
+        }, 200); 
         popupIsVisible = false;
     }
 
     policyContentArea.addEventListener('mouseup', (event) => {
-        // Do not proceed if the event target is the popup itself or inside it
         if (askNuriaPopup.contains(event.target)) {
             return;
         }
-
         const selection = window.getSelection();
         const selectedText = selection.toString().trim();
 
@@ -186,25 +259,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const rect = range.getBoundingClientRect();
             
             let popupX = event.pageX + 5; 
-            let popupY = event.pageY - askNuriaPopup.offsetHeight - 10; // Position above cursor
+            let popupY = event.pageY - askNuriaPopup.offsetHeight - 10;
 
-            // Boundary check: if popup would be above viewport, position below selection's bottom
             if ((window.scrollY + rect.top - askNuriaPopup.offsetHeight - 10) < window.scrollY) {
                  popupY = window.scrollY + rect.bottom + 10;
             }
-            // Boundary check: if popup would be too far left (e.g., selection ends near left edge)
-            if (event.clientX < (askNuriaPopup.offsetWidth / 2) + 10) { // 10px buffer
-                popupX = event.pageX + 5; // Keep it to the right of cursor
+            if (event.clientX < (askNuriaPopup.offsetWidth / 2) + 10) { 
+                popupX = event.pageX + 5; 
             } 
-            // Boundary check: if popup would be too far right
             else if (window.innerWidth - event.clientX < (askNuriaPopup.offsetWidth / 2) + 10) {
-                popupX = event.pageX - askNuriaPopup.offsetWidth - 5; // To the left of cursor
+                popupX = event.pageX - askNuriaPopup.offsetWidth - 5; 
             }
-
-
             showAskPopup(popupX, popupY);
         } else {
-            // If no text is selected (e.g., just a click on policy content) and popup is visible, hide it.
             if (popupIsVisible && !askNuriaPopup.contains(event.target)) {
                  hideAskPopup();
             }
@@ -212,17 +279,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     askNuriaPopup.addEventListener('click', (event) => {
-        event.stopPropagation(); // Prevent mousedown on document from hiding popup immediately
-
+        event.stopPropagation(); 
         if (currentSelectedText) {
             const chatBox = document.getElementById('nuria-chatbot-box'); 
             const chatToggle = document.getElementById('nuria-chatbot-toggle'); 
             const chatInput = document.getElementById('nuria-chat-input'); 
 
-            if (chatBox && chatInput) { // chatToggle might be null if already hidden
+            if (chatBox && chatInput) { 
                 chatBox.style.display = 'flex';
-                if (chatToggle) chatToggle.style.display = 'none'; // Hide toggle if visible
-                
+                if (chatToggle) chatToggle.style.display = 'none';
                 chatInput.value = \`Peux-tu m'en dire plus sur : "${currentSelectedText}" ?\`;
                 chatInput.focus(); 
             } else {
@@ -230,31 +295,84 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         hideAskPopup();
-        currentSelectedText = ''; // Clear text after use
-        // Clear browser selection
+        currentSelectedText = ''; 
         if (window.getSelection) {
             if (window.getSelection().empty) { window.getSelection().empty(); } 
             else if (window.getSelection().removeAllRanges) { window.getSelection().removeAllRanges(); }
         } else if (document.selection) { document.selection.empty(); }
     });
 
-    // General click listener to hide popup if clicking outside
     document.addEventListener('mousedown', (event) => {
         if (popupIsVisible && !askNuriaPopup.contains(event.target)) {
-            // If a new selection is being made, mouseup on policyContent will handle it.
-            // This primarily handles clicks completely outside the policy content or popup.
             const selection = window.getSelection();
-            if (!selection || selection.toString().trim() === '') { // Only hide if no new selection is being made
+            if (!selection || selection.toString().trim() === '') { 
                  hideAskPopup();
             }
         }
     });
-});
-    </script>
 
-    <div class="presentation-container" style="text-align: center; margin: 2em 0;">
-        <h2>Présentation interactive (Canva)</h2>
-        <iframe src="https://www.canva.com/design/DAGn7T8JUpQ/view?embed" style="width:100%; height:600px; border:0;" allowfullscreen="allowfullscreen" loading="lazy"></iframe>
-    </div>
+    // On-Scroll Reveal Script (copied from index.html logic)
+    const revealElements = document.querySelectorAll('.reveal-on-scroll');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+            } else {
+                // entry.target.classList.remove('is-visible'); // Optional: re-hide
+            }
+        });
+    }, {
+        rootMargin: '0px 0px -50px 0px',
+        threshold: 0.01
+    });
+
+    revealElements.forEach(element => {
+        observer.observe(element);
+    });
+
+    // Dynamically add 'reveal-on-scroll' to content that isn't explicitly marked
+    // This is a simplified version; more specific targeting might be needed
+    document.querySelectorAll('.policy-section > h2, .policy-section > ul, .policy-section > ol, .policy-section > p, .policy-section > div > ul, .policy-section > div > p, .styled-table, .presentation-container').forEach(el => {
+        if (!el.classList.contains('reveal-on-scroll')) { // Check if class is not already there
+            el.classList.add('reveal-on-scroll');
+            observer.observe(el);
+        }
+    });
+     // Ensure H1 is observed if not already
+    const mainH1 = document.querySelector('.policy-section > h1');
+    if (mainH1 && !mainH1.classList.contains('reveal-on-scroll')) {
+        mainH1.classList.add('reveal-on-scroll');
+        observer.observe(mainH1);
+    }
+    // Ensure top-level video and PDF link containers are observed
+    const topVideoContainer = document.querySelector('.video-container.centered-container');
+    if (topVideoContainer && !topVideoContainer.classList.contains('reveal-on-scroll')) {
+         topVideoContainer.classList.add('reveal-on-scroll');
+         observer.observe(topVideoContainer);
+    }
+    const topPdfLinkContainer = document.querySelector('p.centered-container'); // This selector might be too general if there are other p.centered-container
+     if (topPdfLinkContainer && topPdfLinkContainer.querySelector('a[href*="politique.pdf"]') && !topPdfLinkContainer.classList.contains('reveal-on-scroll')) { // More specific check
+         topPdfLinkContainer.classList.add('reveal-on-scroll');
+         observer.observe(topPdfLinkContainer);
+    }
+    // Ensure the "IA utilisées" div and the "Présentation interactive" div are observed
+    const iaUsedDiv = document.querySelector('div[style*="margin-top:2em;font-size:0.98em"]');
+    if (iaUsedDiv && !iaUsedDiv.classList.contains('reveal-on-scroll')) {
+        iaUsedDiv.classList.add('reveal-on-scroll');
+        observer.observe(iaUsedDiv);
+    }
+    const canvaContainer = document.querySelector('.presentation-container.centered-container');
+    if (canvaContainer && !canvaContainer.classList.contains('reveal-on-scroll')) {
+        canvaContainer.classList.add('reveal-on-scroll');
+        observer.observe(canvaContainer);
+    }
+
+});
+</script>
+
+<div class="presentation-container reveal-on-scroll centered-container" style="margin: 2em 0;">
+    <h2>Présentation interactive (Canva)</h2>
+    <iframe src="https://www.canva.com/design/DAGn7T8JUpQ/view?embed" style="width:100%; height:600px; border:0;" allowfullscreen="allowfullscreen" loading="lazy"></iframe>
+</div>
 
 {% endblock %}

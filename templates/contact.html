@@ -2,43 +2,238 @@
 
 {% block title %}Contactez les RH – NourrIR{% endblock %}
 
+{% block extra_head %}
+<style>
+/* Styles for on-scroll reveal */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transition-delay: 0.1s;
+}
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Contact Page Specific Styles */
+.contact-container {
+    max-width: 700px; /* Limit width for better readability of form */
+    margin: 0 auto; /* Center the contact container */
+}
+
+.contact-intro-image {
+    text-align: center;
+    margin-top: 1.5em;
+    margin-bottom: 2.5em;
+}
+.contact-intro-image img {
+    max-width: 180px; /* Slightly smaller for subtlety */
+    width: 100%;
+    border-radius: 50%; /* Circular image */
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.contact-details {
+    margin-top: 2em;
+    margin-bottom: 2.5em;
+    padding: 1.5em;
+    background-color: #f9f9f9; /* Light background for this section */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.contact-details h3 {
+    margin-top: 0;
+    color: var(--midnight-navy);
+    font-family: 'Nunito', sans-serif;
+}
+.contact-details p {
+    margin-bottom: 0.8em;
+    font-size: 1.05em; /* Slightly larger for clarity */
+    line-height: 1.7;
+}
+.contact-details p strong {
+    color: var(--dopamine-purple); /* Use theme color for emphasis */
+}
+.contact-details a {
+    color: var(--growth-green); /* Use another theme color for links */
+    text-decoration: none;
+}
+.contact-details a:hover {
+    text-decoration: underline;
+}
+.contact-icon {
+    margin-right: 0.6em;
+    color: var(--dopamine-purple);
+}
+
+.contact-form-container h3 {
+    text-align: center;
+    margin-bottom: 1.5em;
+    font-family: 'Nunito', sans-serif;
+    color: var(--midnight-navy);
+}
+
+.form-group {
+    margin-bottom: 1.5em; /* Increased spacing between form groups */
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5em; /* Space between label and input */
+    font-weight: 600;
+    color: #333; /* Darker label text */
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 0.8em 1em; /* More padding */
+    border: 1px solid #ccc;
+    border-radius: 6px; /* Slightly more rounded */
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    font-size: 1em;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-input:focus,
+.form-textarea:focus {
+    border-color: var(--dopamine-purple);
+    box-shadow: 0 0 0 3px rgba(124, 77, 255, 0.2); /* Focus ring */
+    outline: none;
+}
+
+.submit-button {
+    display: block; /* Make button block to center it */
+    width: auto; /* Auto width based on padding */
+    min-width: 200px; /* Minimum width */
+    margin: 2em auto 0 auto; /* Center button */
+    padding: 0.8em 1.8em; /* Generous padding */
+    background-color: var(--dopamine-purple);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.05em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+.submit-button:hover {
+    background-color: #6A3EEA; /* Darker shade from base.html */
+    opacity: 1; /* Override base.html opacity for this specific button if needed */
+}
+.submit-button:active {
+    transform: translateY(1px);
+}
+
+/* Non-functional message style */
+#form-message {
+    margin-top: 1.5em;
+    padding: 1em;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 600;
+}
+#form-message.success { /* Example if we had success state */
+    background-color: var(--growth-green);
+    color: white;
+}
+#form-message.info {
+    background-color: var(--joy-yellow);
+    color: var(--midnight-navy);
+}
+</style>
+{% endblock %}
+
 {% block content %}
-    <h1>Contactez notre équipe RH</h1>
-    <p>
+<div class="contact-container">
+    <h1 class="reveal-on-scroll">Contactez notre équipe RH</h1>
+    <p class="reveal-on-scroll">
         Si vous avez des questions concernant les ressources humaines, les carrières chez NourrIR, ou si vous souhaitez nous faire part de vos commentaires, n'hésitez pas à nous contacter. Vous pouvez utiliser le formulaire ci-dessous ou nous envoyer un courriel directement.
     </p>
 
-    <div style="text-align: center; margin-top: 2em; margin-bottom: 2em;">
-        <img src="{{ url_for('serve_assets', filename='Smiling Heart on Beige Background.png') }}" alt="Contactez-nous - Image d'ambiance" style="max-width: 200px; width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    <div class="contact-intro-image reveal-on-scroll">
+        <img src="{{ url_for('serve_assets', filename='Smiling Heart on Beige Background.png') }}" alt="Contactez-nous - Image d'ambiance">
     </div>
 
-    <div style="margin-top: 2em; margin-bottom: 2em;">
+    <div class="contact-details reveal-on-scroll">
         <h3>Nos coordonnées :</h3>
-        <p><strong>Email :</strong> <a href="mailto:rh@nourrir.fictif">rh@nourrir.fictif</a></p>
-        <p><strong>Téléphone :</strong> +33 1 23 45 67 89 (Exemple)</p>
-        <p><strong>Adresse :</strong> 123 Rue Imaginaire, 75000 Paris, France (Exemple)</p>
+        <p><span class="contact-icon">📧</span><strong>Email :</strong> <a href="mailto:rh@nourrir.fictif">rh@nourrir.fictif</a></p>
+        <p><span class="contact-icon">📞</span><strong>Téléphone :</strong> +33 1 23 45 67 89 (Exemple)</p>
+        <p><span class="contact-icon">📍</span><strong>Adresse :</strong> 123 Rue Imaginaire, 75000 Paris, France (Exemple)</p>
     </div>
 
-    <h3>Formulaire de contact :</h3>
-    <form action="#" method="POST"> {# Action is # because it's non-functional #}
-        <div style="margin-bottom: 1em;">
-            <label for="contact_name" style="display: block; margin-bottom: 0.3em;">Votre nom :</label>
-            <input type="text" id="contact_name" name="name" required style="width: 100%; padding: 0.5em; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-        </div>
-        <div style="margin-bottom: 1em;">
-            <label for="contact_email" style="display: block; margin-bottom: 0.3em;">Votre email :</label>
-            <input type="email" id="contact_email" name="email" required style="width: 100%; padding: 0.5em; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-        </div>
-        <div style="margin-bottom: 1em;">
-            <label for="contact_subject" style="display: block; margin-bottom: 0.3em;">Sujet :</label>
-            <input type="text" id="contact_subject" name="subject" required style="width: 100%; padding: 0.5em; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-        </div>
-        <div style="margin-bottom: 1em;">
-            <label for="contact_message" style="display: block; margin-bottom: 0.3em;">Votre message :</label>
-            <textarea id="contact_message" name="message" rows="6" required style="width: 100%; padding: 0.5em; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;"></textarea>
-        </div>
-        <div>
-            <button type="submit" style="padding: 0.7em 1.5em; background-color: var(--dopamine-purple); color: white; border: none; border-radius: 4px; cursor: pointer;">Envoyer (non fonctionnel)</button>
-        </div>
-    </form>
+    <div class="contact-form-container reveal-on-scroll">
+        <h3>Formulaire de contact :</h3>
+        <form id="contactForm" method="POST"> {# Removed action="#" #}
+            <div class="form-group">
+                <label for="contact_name" class="form-label">Votre nom :</label>
+                <input type="text" id="contact_name" name="name" required class="form-input">
+            </div>
+            <div class="form-group">
+                <label for="contact_email" class="form-label">Votre email :</label>
+                <input type="email" id="contact_email" name="email" required class="form-input">
+            </div>
+            <div class="form-group">
+                <label for="contact_subject" class="form-label">Sujet :</label>
+                <input type="text" id="contact_subject" name="subject" required class="form-input">
+            </div>
+            <div class="form-group">
+                <label for="contact_message" class="form-label">Votre message :</label>
+                <textarea id="contact_message" name="message" rows="6" required class="form-textarea"></textarea>
+            </div>
+            <div>
+                <button type="submit" class="submit-button">Envoyer</button> {# Text updated #}
+            </div>
+        </form>
+        <div id="form-message" style="display: none;"></div> {# For non-functional message #}
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // On-Scroll Reveal Script
+    const revealElements = document.querySelectorAll('.reveal-on-scroll');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+            } else {
+                // Optional: remove to re-trigger animation on scroll up
+                // entry.target.classList.remove('is-visible'); 
+            }
+        });
+    }, {
+        rootMargin: '0px 0px -50px 0px',
+        threshold: 0.01
+    });
+
+    revealElements.forEach(element => {
+        observer.observe(element);
+    });
+
+    // Contact Form Submission Handler
+    const contactForm = document.getElementById('contactForm');
+    const formMessageDiv = document.getElementById('form-message');
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent actual submission
+
+            // Display the non-functional message
+            if (formMessageDiv) {
+                formMessageDiv.textContent = "Ce formulaire n'est pas fonctionnel pour le moment. Veuillez nous contacter directement par e-mail à rh@nourrir.fictif.";
+                formMessageDiv.className = 'info'; // Add class for styling
+                formMessageDiv.style.display = 'block';
+
+                // Optional: Scroll to the message
+                formMessageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                // Fallback if the message div isn't there for some reason
+                alert("Ce formulaire n'est pas fonctionnel pour le moment. Veuillez nous contacter directement par e-mail à rh@nourrir.fictif.");
+            }
+        });
+    }
+});
+</script>
 {% endblock %}

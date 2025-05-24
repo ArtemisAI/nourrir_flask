@@ -2,78 +2,216 @@
 
 {% block title %}Les Coulisses de NourrIR{% endblock %}
 
-{% block content %}
+{% block extra_head %}
+<style>
+/* Styles for on-scroll reveal */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transition-delay: 0.1s;
+}
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
 
-    <h1>Les Coulisses de NourrIR</h1>
-    <div style="text-align: center; margin-top: 2.5em; margin-bottom: 2.5em;">
-        <img src="{{ url_for('serve_assets', filename='equipe.png') }}" alt="Équipe NourrIR" style="max-width: 600px; width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+/* Coulisses Page Specific Styles */
+.coulisses-section { /* Wrapper for content blocks */
+    margin-bottom: 2em;
+}
+.coulisses-section h1, .coulisses-section h2 {
+    color: var(--midnight-navy); /* Ensure headings use theme color */
+    font-family: 'Nunito', sans-serif; /* Consistent heading font */
+}
+.coulisses-section h2 {
+    margin-top: 2em;
+    margin-bottom: 0.8em;
+    border-bottom: 2px solid var(--dopamine-purple); /* Accent for H2 */
+    padding-bottom: 0.3em;
+}
+.coulisses-section p, .coulisses-section ul {
+    line-height: 1.7;
+    margin-bottom: 1em;
+}
+
+.centered-media-container {
+    text-align: center;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+.centered-media-container img {
+    max-width: 100%; /* Ensure responsiveness */
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+.centered-media-container .caption { /* For captions under images */
+    margin-top: 0.8em;
+    font-size: 0.9em;
+    color: #555;
+    font-style: italic;
+}
+
+.ai-tools-list {
+    list-style: none;
+    padding-left: 0;
+}
+.ai-tools-list > li {
+    margin-bottom: 1.5em;
+}
+.ai-tools-list strong { /* Category titles */
+    font-size: 1.1em;
+    color: var(--dopamine-purple);
+    display: block;
+    margin-bottom: 0.5em;
+}
+.ai-tools-list .tool-icon { /* For icons next to category titles */
+    margin-right: 0.5em;
+    font-size: 1.2em; /* Make icon slightly larger */
+}
+.ai-tools-list ul {
+    list-style: disc; /* Standard bullets for sub-items */
+    padding-left: 25px; /* Indentation for sub-items */
+    margin-top: 0.3em;
+}
+.ai-tools-list ul li {
+    margin-bottom: 0.4em;
+}
+
+.presentation-embed-container {
+    position: relative;
+    width: 100%;
+    max-width: 960px; /* Max width of the presentation */
+    margin: 2em auto; /* Centered */
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+.presentation-embed-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+.final-credits {
+    margin-top: 3em;
+    text-align: center;
+    font-style: italic;
+    color: #666;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="coulisses-section">
+    <h1 class="reveal-on-scroll">Les Coulisses de NourrIR</h1>
+
+    <div class="centered-media-container reveal-on-scroll">
+        <img src="{{ url_for('serve_assets', filename='equipe.png') }}" alt="Équipe NourrIR en collaboration" style="max-width: 600px;">
     </div>
 
-    <p>Bienvenue dans les coulisses de la création de NourrIR ! Ce projet a été développé avec passion et innovation dans le cadre du cours <strong>REI 1850 – Gestion des ressources humaines et intelligence artificielle</strong> à l'Université de Montréal (Session été 2025).</p>
+    <p class="reveal-on-scroll">Bienvenue dans les coulisses de la création de NourrIR ! Ce projet a été développé avec passion et innovation dans le cadre du cours <strong>REI 1850 – Gestion des ressources humaines et intelligence artificielle</strong> à l'Université de Montréal (Session été 2025).</p>
 
-    <h2>Notre Mission dans ce Projet</h2>
-    <p>L'objectif était de concevoir et de prototyper une application web innovante explorant le potentiel de l'intelligence artificielle pour le bien-être. NourrIR est le fruit de cette exploration, visant à offrir une expérience utilisateur engageante et personnalisée.</p>
+    <h2 class="reveal-on-scroll">Notre Mission dans ce Projet</h2>
+    <p class="reveal-on-scroll">L'objectif était de concevoir et de prototyper une application web innovante explorant le potentiel de l'intelligence artificielle pour le bien-être. NourrIR est le fruit de cette exploration, visant à offrir une expérience utilisateur engageante et personnalisée.</p>
 
-    <h2>Les Outils d'IA de Notre Créativité</h2>
-    <p>Pour donner vie à NourrIR, nous avons utilisé une gamme diversifiée d'outils d'intelligence artificielle :</p>
-    <ul>
-        <li><strong>Recherche et Sources :</strong>
+    <h2 class="reveal-on-scroll">Les Outils d'IA de Notre Créativité</h2>
+    <p class="reveal-on-scroll">Pour donner vie à NourrIR, nous avons utilisé une gamme diversifiée d'outils d'intelligence artificielle :</p>
+    <ul class="ai-tools-list reveal-on-scroll">
+        <li>
+            <strong><span class="tool-icon">🔎</span>Recherche et Sources :</strong>
             <ul>
                 <li><strong>ChatGPT Deep Research :</strong> Recherche de sources et validation des informations.</li>
             </ul>
         </li>
-        <li><strong>Idéation et Conception :</strong>
+        <li>
+            <strong><span class="tool-icon">💡</span>Idéation et Conception :</strong>
             <ul>
-                <li><strong>GPT-4.1 & GPT-4.5 :</strong> Développement conceptuel et structuration des idées.</li>
-                <li><strong>GPT-4o :</strong> Génération de logos et d'illustrations.</li>
-                <li><strong>o3 :</strong> Élaboration des bases de la politique d'intégration.</li>
+                <li><strong>GPT-4 et modèles similaires :</strong> Développement conceptuel et structuration des idées.</li>
+                <li><strong>Outils de génération d'images IA (type DALL-E/Midjourney via GPT-4o) :</strong> Génération de logos et d'illustrations.</li>
+                <li><strong>Modèles de langage avancés :</strong> Élaboration des bases de la politique d'intégration.</li>
             </ul>
         </li>
-        <li><strong>Contenu Multimédia :</strong>
+        <li>
+            <strong><span class="tool-icon">🎬</span>Contenu Multimédia :</strong>
             <ul>
-                <li><strong>Suno v.4.5 :</strong> Composition musicale pour l'identité sonore de l'entreprise.</li>
-                <li><strong>Synthesia.io & JogAI :</strong> Création de vidéos explicatives animées.</li>
+                <li><strong>Suno :</strong> Composition musicale pour l'identité sonore de l'entreprise.</li>
+                <li><strong>Synthesia.io et outils similaires :</strong> Création de vidéos explicatives animées.</li>
             </ul>
         </li>
-        <li><strong>Développement et Débogage :</strong>
+        <li>
+            <strong><span class="tool-icon">💻</span>Développement et Débogage :</strong>
             <ul>
-                <li><strong>OpenAI Codex :</strong> Assistance à la génération de code.</li>
-                <li><strong>Jules (Google) :</strong> Agent IA pour le débogage et l'optimisation du code.</li>
+                <li><strong>Assistants de code IA (ex: OpenAI Codex, GitHub Copilot) :</strong> Assistance à la génération de code.</li>
+                <li><strong>Outils d'analyse de code assistés par IA :</strong> Pour le débogage et l'optimisation du code.</li>
             </ul>
         </li>
-        <li><strong>Chatbot RH :</strong>
+        <li>
+            <strong><span class="tool-icon">🤖</span>Chatbot RH :</strong>
             <ul>
-                <li><strong>n8n :</strong> Orchestration du chatbot, intégrant un système RAG (Retrieval Augmented Generation) utilisant une base de données vectorielle Pinecone pour extraire les informations internes.</li>
+                <li><strong>n8n :</strong> Orchestration du chatbot, intégrant un système <span class="glossary-term" data-definition="Retrieval Augmented Generation - une technique d'IA qui combine la récupération d'informations pertinentes d'une base de connaissances avec un modèle génératif pour produire des réponses plus précises et contextuelles.">RAG</span> (Retrieval Augmented Generation) utilisant une base de données vectorielle Pinecone pour extraire les informations internes.</li>
             </ul>
         </li>
-        <li><strong>Présentations :</strong>
+        <li>
+            <strong><span class="tool-icon">📊</span>Présentations :</strong>
             <ul>
-                <li><strong>Canvas :</strong> Conception des supports pédagogiques et présentations.</li>
+                <li><strong>Canva :</strong> Conception des supports pédagogiques et présentations.</li>
             </ul>
         </li>
     </ul>
-    <h2>Workflow n8n du Chatbot RH</h2>
-    <div style="text-align: center; margin: 2em 0;">
-        <img src="{{ url_for('serve_assets', filename='RAG.png') }}" alt="Capture d'écran du workflow n8n" style="max-width:800px; width:100%; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,0.1);">
-        <p style="margin-top: 1em;">Cette approche visuelle avec n8n, combinée au RAG, offre plusieurs avantages : elle permet d'orchestrer facilement les appels API, d'intégrer et d'interroger nos données internes pour des réponses cohérentes et pertinentes, et de maintenir ou d'adapter le workflow sans écrire de code.</p>
+
+    <h2 class="reveal-on-scroll">Workflow n8n du Chatbot RH</h2>
+    <div class="centered-media-container reveal-on-scroll">
+        <img src="{{ url_for('serve_assets', filename='RAG.png') }}" alt="Capture d'écran du workflow n8n pour le RAG" style="max-width:800px;">
+        <p class="caption">Cette approche visuelle avec n8n, combinée au <span class="glossary-term" data-definition="Retrieval Augmented Generation - une technique d'IA qui combine la récupération d'informations pertinentes d'une base de connaissances avec un modèle génératif pour produire des réponses plus précises et contextuelles.">RAG</span>, offre plusieurs avantages : elle permet d'orchestrer facilement les appels API, d'intégrer et d'interroger nos données internes pour des réponses cohérentes et pertinentes, et de maintenir ou d'adapter le workflow sans écrire de code.</p>
     </div>
-    <p>Pour toute question, <a href="{{ url_for('contact') }}">contactez-nous</a>.</p>
-    <p>Consultez le code source sur GitHub : <a href="https://github.com/ArtemisAI/nourrir_flask" target="_blank">https://github.com/ArtemisAI/nourrir_flask</a>.</p>
-    <p style="margin-top:1em; font-style:italic;">Cette application web fonctionne dans un conteneur Docker et est déployée sur Render.com. Elle est fournie à des fins pédagogiques uniquement.</p>
-
-    <h2>Un Projet d'Apprentissage Continu</h2>
-    <p>Ce projet représente une étape clé dans notre parcours d'apprentissage des technologies émergentes. Chaque outil et chaque phase de développement nous ont permis d'acquérir de nouvelles compétences et de mieux comprendre les enjeux et les possibilités de l'IA.</p>
-
-    <div style="text-align: center; margin-top: 2.5em; margin-bottom: 2.5em;">
-        <img src="{{ url_for('serve_assets', filename='ChatGPT Image May 18, 2025, 10_15_31 AM.png') }}" alt="Illustration de l'innovation technologique" style="max-width: 350px; width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    
+    <div class="reveal-on-scroll">
+        <p>Pour toute question, <a href="{{ url_for('contact') }}">contactez-nous</a>.</p>
+        <p>Consultez le code source sur GitHub : <a href="https://github.com/ArtemisAI/nourrir_flask" target="_blank">https://github.com/ArtemisAI/nourrir_flask</a>.</p>
+        <p style="margin-top:1em; font-style:italic;">Cette application web fonctionne dans un conteneur Docker et est déployée sur Render.com. Elle est fournie à des fins pédagogiques uniquement.</p>
     </div>
 
-    <div class="presentation-container" style="text-align:center; margin:2em 0;">
-        <h2>Voici l'Équipe</h2>
-        <iframe src="https://docs.google.com/gview?embedded=true&url={{ url_for('serve_assets', filename='Présentation équipe NourrIR.pptx', _external=True) }}" style="width:960px; height:569px;" frameborder="0">Votre navigateur ne supporte pas les iframes.</iframe>
+    <h2 class="reveal-on-scroll">Un Projet d'Apprentissage Continu</h2>
+    <p class="reveal-on-scroll">Ce projet représente une étape clé dans notre parcours d'apprentissage des technologies émergentes. Chaque outil et chaque phase de développement nous ont permis d'acquérir de nouvelles compétences et de mieux comprendre les enjeux et les possibilités de l'IA.</p>
+
+    <div class="centered-media-container reveal-on-scroll">
+        <img src="{{ url_for('serve_assets', filename='ChatGPT Image May 18, 2025, 10_15_31 AM.png') }}" alt="Illustration de l'innovation technologique et de l'IA" style="max-width: 350px;">
+    </div>
+
+    <div class="presentation-embed-container reveal-on-scroll">
+        <h2 style="text-align:center; margin-bottom:1em;">Voici l'Équipe</h2>
+        <iframe src="https://docs.google.com/gview?embedded=true&url={{ url_for('serve_assets', filename='Présentation équipe NourrIR.pptx', _external=True) }}" allowfullscreen>Votre navigateur ne supporte pas les iframes pour afficher les présentations.</iframe>
     </div>
         
+    <p class="final-credits reveal-on-scroll">L'équipe du projet NourrIR – UdeM REI 1850 (Session été 2025)</p>
+</div>
 
-    <p style="margin-top: 2em; text-align: center; font-style: italic;">L'équipe du projet NourrIR – UdeM REI 1850 (Session été 2025)</p>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // On-Scroll Reveal Script
+    const revealElements = document.querySelectorAll('.reveal-on-scroll');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+            } else {
+                // Optional: remove to re-trigger animation on scroll up
+                // entry.target.classList.remove('is-visible'); 
+            }
+        });
+    }, {
+        rootMargin: '0px 0px -50px 0px', // Trigger when element is 50px from bottom of viewport
+        threshold: 0.01 
+    });
 
+    revealElements.forEach(element => {
+        observer.observe(element);
+    });
+});
+</script>
 {% endblock %}
