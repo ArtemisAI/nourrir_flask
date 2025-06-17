@@ -5,3 +5,4 @@
 - [ ] Performance policy pages need improved responsive styling.
 - [x] Netlify deploy failed to parse configuration; replaced `python_runtime` with `python_version`.
 - [x] Netlify deploy still failed due to `python_version`; removed the property entirely.
+- [x] Netlify deploy preview served 404s due to functions not detected; added explicit directory setting.
