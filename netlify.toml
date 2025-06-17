@@ -3,7 +3,6 @@
   functions = "netlify/functions"
 
 [functions]
-  python_version = "3.11"
 
 [[redirects]]
   from = "/*"

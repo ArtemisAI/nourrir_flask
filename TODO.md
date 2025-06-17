@@ -8,3 +8,4 @@
 - [ ] Expand automated tests beyond network smoke test.
 - [x] Integrate performance policy pages into the Flask app.
 - [ ] Improve responsive styling for performance policy pages.
+- [ ] Validate Netlify deploy after removing python version setting.
