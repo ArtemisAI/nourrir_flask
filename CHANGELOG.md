@@ -4,6 +4,8 @@
 ### Unreleased
 - Added `static/js/ui.js` for scroll observers, navbar transparency, and theme helpers. Base template now loads this file and no longer includes inline scripts.
 - Added performance sections dropdown in navbar and removed inline dropdown blocks from policy pages.
+- Configured Tailwind build with DaisyUI plugin and new `input.css`; mobile menu now transitions smoothly and navbar padding defaults to `py-6` for initial tests.
+- Bundled Alpine.js locally under `static/js` and updated templates to load it instead of the CDN script.
 - Replaced Tailwind and DaisyUI CDN links with a local build using `npx tailwindcss`; Netlify now compiles `static/styles.css`.
 - Fixed Netlify build by installing Tailwind CLI via npm and running `npm ci` before compilation.
 - Created `REVAMP` branch from `work` to continue UI/UX revamp tasks.

@@ -14,3 +14,4 @@ Follow the tasks in the respective files to track progress. Once completed, mark
 - [x] Create `REVAMP` branch from `work`.
 - [x] Set up Tailwind build pipeline with DaisyUI plugin and local `styles.css`.
 - [x] Install Tailwind CLI via npm and update Netlify build command
+- [x] Bundle Alpine.js locally to prevent CDN failures
